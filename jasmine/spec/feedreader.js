@@ -90,22 +90,27 @@ $(function () {
      * the use of Jasmine's beforeEach and asynchronous done() function.
      */
 
-     beforeEach((done) => {
-         loadFeed(0, done);
-     });
+    beforeEach((done) => {
+        loadFeed(0, () => {
+          done();
+        });
+  });
      it('has at least single element within the feed container', (done) => {
-
-     })
+        const numberEntries = document.querySelector('.feed').getElementsByClassName('entry').length;
+        expect(numberEntries).toBeGreaterThan(0);
+        done();
+  });
+});
 
 
 
 
 
     /* TODO: Write a new test suite named "New Feed Selection" */
-
-    /* TODO: Write a test that ensures when a new feed is loaded
-     * by the loadFeed function that the content actually changes.
-     * Remember, loadFeed() is asynchronous.
-     */
-});
+    describe('New Feed Selection', () => {
+        /* TODO: Write a test that ensures when a new feed is loaded
+        * by the loadFeed function that the content actually changes.
+        * Remember, loadFeed() is asynchronous.
+        */
+    });
 }());
