@@ -91,15 +91,13 @@ $(function () {
      */
 
     beforeEach((done) => {
-        loadFeed(0, () => {
-          done();
-        });
-  });
-     it('has at least single element within the feed container', (done) => {
-        const numberEntries = document.querySelector('.feed').getElementsByClassName('entry').length;
-        expect(numberEntries).toBeGreaterThan(0);
-        done();
-  });
+        loadFeed(0, done);
+    });
+
+    it('has at least single element within the feed container', () => {
+        expect(document.querySelectorAll('.feed .entry').length)
+            .toBeGreaterThan(0);
+    });
 });
 
 
@@ -108,10 +106,29 @@ $(function () {
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection', () => {
+        let oldFeedTitle;
+        let newFeedTitle;
+
+        beforeEach((done) => {
+            loadFeed(0, () => {
+                oldFeedTitle = document.querySelector('.feed h2').textContent;
+
+                loadFeed(1, () => {
+                    newFeedTitle = document.querySelector('.feed h2').textContent;
+                    done();
+                });
+            });
+        });
+
         /* TODO: Write a test that ensures when a new feed is loaded
         * by the loadFeed function that the content actually changes.
         * Remember, loadFeed() is asynchronous.
         */
+
+        it('check content change', (done) => {
+            expect(oldFeedTitle).not.toEqual(newFeedTitle);
+            done();
+        });
 
     });
 }());
